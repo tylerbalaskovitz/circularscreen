@@ -65,24 +65,21 @@ public class MouseHandler implements MouseListener, Runnable {
 		mainThread.start();
 	}
 	
-	public void getNumberOfDisplayDevices() {
+	public void calculateScreenBoundaries() {
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		
 		GraphicsDevice[] devices = env.getScreenDevices();
 		
-		
-		
-		numberOfScreens = devices.length;
-		for (int i = 0; i < numberOfScreens; i++) {
+		for (int i = 0; i < devices.length; i++) {	
 		devices[i].getDefaultConfiguration().getBounds();
-		if (i == 0) {
-			leftMostX = devices[i].getDefaultConfiguration().getBounds().x;
-		}
-		if (i == (numberOfScreens - 1)) {
-			rightMostX = (devices[i].getDefaultConfiguration().getBounds().x + (devices[i].getDefaultConfiguration().getBounds().width)-i);
-		}
+		
+		leftMostX = Math.min(leftMostX, devices[i].getDefaultConfiguration().getBounds().x);
+		
+		rightMostX += devices[i].getDefaultConfiguration().getBounds().width;
+
 		}
 		
+		// include offset of left boundary coordinate
+		rightMostX += leftMostX - 1;
 	}
 	
 	public void addToSystemTray()  {
@@ -95,7 +92,7 @@ public class MouseHandler implements MouseListener, Runnable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				getNumberOfDisplayDevices();
+				calculateScreenBoundaries()
 				
 			}
 			
