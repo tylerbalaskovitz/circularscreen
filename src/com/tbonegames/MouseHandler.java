@@ -59,24 +59,20 @@ public class MouseHandler implements MouseListener, Runnable {
 		mainThread.start();
 	}
 	
-	public void getNumberOfDisplayDevices() {
+	public void calculateScreenBoundaries() {
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		
 		GraphicsDevice[] devices = env.getScreenDevices();
 		
-		
-		
-		numberOfScreens = devices.length;
-		for (int i = 0; i < numberOfScreens; i++) {
+		for (int i = 0; i < devices.length; i++) {	
 		devices[i].getDefaultConfiguration().getBounds();
-		if (i == 0) {
-			leftMostX = devices[i].getDefaultConfiguration().getBounds().x;
-		}
-		if (i == (numberOfScreens - 1)) {
-			rightMostX = (devices[i].getDefaultConfiguration().getBounds().x + (devices[i].getDefaultConfiguration().getBounds().width)-1);
-		}
+		
+		leftMostX = Math.min(leftMostX, devices[i].getDefaultConfiguration().getBounds().x);
+		
+		rightMostX += devices[i].getDefaultConfiguration().getBounds().width-1;
 		}
 		
+		// include offset of possible negative left boundary coordinate
+		rightMostX += leftMostX;
 	}
 	
 	public void getCurrentMouseCoordinates() throws AWTException { 
@@ -100,7 +96,7 @@ public class MouseHandler implements MouseListener, Runnable {
 			robot.mouseMove((leftMostX + 1), currentLocationY);
 		}
 		
-		//System.out.println("Current X:" + currentLocationX + "Y:" + currentLocationY);
+		System.out.println("Current X:" + currentLocationX + "Y:" + currentLocationY);
 	}
 
 	@Override
