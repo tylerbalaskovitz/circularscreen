@@ -111,6 +111,7 @@ public class MouseHandler implements MouseListener, Runnable {
 		long lastTime = System.nanoTime();
 		long currentTime;
 		long timer = 0;
+		try {
 		while (mainThread != null) {
 			currentTime = System.nanoTime();
 			
@@ -131,6 +132,12 @@ public class MouseHandler implements MouseListener, Runnable {
 				timer = 0;
 			}
 		
+		}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
