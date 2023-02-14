@@ -68,11 +68,11 @@ public class MouseHandler implements MouseListener, Runnable {
 		
 		leftMostX = Math.min(leftMostX, devices[i].getDefaultConfiguration().getBounds().x);
 		
-		rightMostX += devices[i].getDefaultConfiguration().getBounds().width-1;
+		rightMostX += devices[i].getDefaultConfiguration().getBounds().width;
 		}
 		
-		// include offset of possible negative left boundary coordinate
-		rightMostX += leftMostX;
+		// include offset of left boundary coordinate
+		rightMostX += leftMostX - 1;
 	}
 	
 	public void getCurrentMouseCoordinates() throws AWTException { 
@@ -96,7 +96,7 @@ public class MouseHandler implements MouseListener, Runnable {
 			robot.mouseMove((leftMostX + 1), currentLocationY);
 		}
 		
-		System.out.println("Current X:" + currentLocationX + "Y:" + currentLocationY);
+		//System.out.println("Current X:" + currentLocationX + "Y:" + currentLocationY);
 	}
 
 	@Override
