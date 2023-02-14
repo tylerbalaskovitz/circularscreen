@@ -64,14 +64,16 @@ public class MouseHandler implements MouseListener, Runnable {
 		
 		GraphicsDevice[] devices = env.getScreenDevices();
 		
+		
+		
 		numberOfScreens = devices.length;
 		for (int i = 0; i < numberOfScreens; i++) {
 		devices[i].getDefaultConfiguration().getBounds();
 		if (i == 0) {
-			leftMostX = -(devices[i].getDefaultConfiguration().getBounds().width);
+			leftMostX = devices[i].getDefaultConfiguration().getBounds().x;
 		}
-		if (i >= 1) {
-			rightMostX += ((devices[i].getDefaultConfiguration().getBounds().width) - 1);
+		if (i == (numberOfScreens - 1)) {
+			rightMostX = (devices[i].getDefaultConfiguration().getBounds().x + (devices[i].getDefaultConfiguration().getBounds().width)-1);
 		}
 		}
 		
