@@ -8,6 +8,7 @@ public class Main {
 	
 	public Main() {
 		
+		mHandler.addToSystemTray();
 		mHandler.getNumberOfDisplayDevices();
 		mHandler.startCircularScreen();
 		
