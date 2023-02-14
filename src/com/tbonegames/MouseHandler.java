@@ -90,6 +90,17 @@ public class MouseHandler implements MouseListener, Runnable {
 		TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/monitor.png")));
 		PopupMenu popMenu = new PopupMenu();
 		
+		MenuItem reconfigure = new MenuItem("Reconfigure");
+		reconfigure.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getNumberOfDisplayDevices();
+				
+			}
+			
+		});
+		
 		MenuItem exit = new MenuItem("Exit");
 		exit.addActionListener(new ActionListener() {
 
