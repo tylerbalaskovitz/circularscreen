@@ -8,8 +8,9 @@ public class Main {
 	
 	public Main() {
 		
-		
+		mHandler.getNumberOfDisplayDevices();
 		mHandler.startCircularScreen();
+		
 	}
 	
 	

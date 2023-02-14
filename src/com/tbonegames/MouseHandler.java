@@ -2,6 +2,8 @@ package com.tbonegames;
 
 import java.awt.AWTException;
 import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
@@ -20,6 +22,7 @@ public class MouseHandler implements MouseListener, Runnable {
 	public Point pointerLocation;
 	public int currentLocationX;
 	public int currentLocationY;
+	public int numberOfScreens;
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -56,16 +59,29 @@ public class MouseHandler implements MouseListener, Runnable {
 		mainThread.start();
 	}
 	
+	public void getNumberOfDisplayDevices() {
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		
+		GraphicsDevice[] devices = env.getScreenDevices();
+		
+		numberOfScreens = devices.length;
+		for (int i = 0; i < numberOfScreens; i++) {
+		devices[i].getDefaultConfiguration().getBounds();
+		if (i == 0) {
+			leftMostX = -(devices[i].getDefaultConfiguration().getBounds().width);
+		}
+		if (i >= 1) {
+			rightMostX += ((devices[i].getDefaultConfiguration().getBounds().width) - 1);
+		}
+		}
+		
+	}
+	
 	public void getCurrentMouseCoordinates() throws AWTException { 
 		
 		//gets the resolution of the screen via AWT and the Dimension class
 		size = Toolkit.getDefaultToolkit().getScreenSize();
 		
-		//used to calibrate the screen for the first time when the initial program is being ran. 
-		//The screen size will be used then negated to get the rightMostX, and leftMostX
-		
-		rightMostX = ((int)size.getWidth()-1);
-		leftMostX = (-(int)size.getWidth());
 		
 		if (robotRunning == false) {
 			robot = new Robot();
