@@ -8,7 +8,9 @@ public class Main {
 	
 	public Main() {
 		
+
 		mHandler.calculateScreenBoundaries();
+		mHandler.addToSystemTray();
 		mHandler.startCircularScreen();
 		
 	}

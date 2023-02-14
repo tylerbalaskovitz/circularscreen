@@ -4,10 +4,16 @@ import java.awt.AWTException;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.MenuItem;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.PopupMenu;
 import java.awt.Robot;
+import java.awt.SystemTray;
 import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -69,10 +75,48 @@ public class MouseHandler implements MouseListener, Runnable {
 		leftMostX = Math.min(leftMostX, devices[i].getDefaultConfiguration().getBounds().x);
 		
 		rightMostX += devices[i].getDefaultConfiguration().getBounds().width;
+
 		}
 		
 		// include offset of left boundary coordinate
 		rightMostX += leftMostX - 1;
+	}
+	
+	public void addToSystemTray()  {
+		SystemTray systemTray = SystemTray.getSystemTray();
+		TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/monitor.png")));
+		PopupMenu popMenu = new PopupMenu();
+		
+		MenuItem reconfigure = new MenuItem("Reconfigure");
+		reconfigure.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				calculateScreenBoundaries()
+				
+			}
+			
+		});
+		
+		MenuItem exit = new MenuItem("Exit");
+		exit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+				
+			}
+			
+		});
+		popMenu.add(reconfigure);
+		popMenu.add(exit);
+		trayIcon.setPopupMenu(popMenu);
+		try {
+			systemTray.add(trayIcon);
+		} catch (AWTException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
 	public void getCurrentMouseCoordinates() throws AWTException { 
