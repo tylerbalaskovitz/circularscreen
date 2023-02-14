@@ -10,7 +10,7 @@ public class Main {
 	public Main() throws AWTException {
 		
 		
-		mHandler.getCurrentMouseCoordinates();
+		mHandler.startCircularScreen();
 	}
 	
 	
