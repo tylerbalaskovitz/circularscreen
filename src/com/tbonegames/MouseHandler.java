@@ -92,7 +92,7 @@ public class MouseHandler implements MouseListener, Runnable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				calculateScreenBoundaries()
+				calculateScreenBoundaries();
 				
 			}
 			
