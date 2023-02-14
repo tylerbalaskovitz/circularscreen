@@ -79,7 +79,12 @@ public class MouseHandler implements MouseListener, Runnable {
 		}
 		
 		// include offset of left boundary coordinate
+		if (leftMostX <= 0){
 		rightMostX += leftMostX - 1;
+		} else {
+			rightMostX--;
+		}
+			
 	}
 	
 	public void addToSystemTray()  {
