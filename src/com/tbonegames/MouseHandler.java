@@ -111,7 +111,7 @@ public class MouseHandler implements MouseListener, Runnable {
 			}
 			
 		});
-		
+		popMenu.add(reconfigure);
 		popMenu.add(exit);
 		trayIcon.setPopupMenu(popMenu);
 		try {
