@@ -1,16 +1,19 @@
 package com.tbonegames;
 
 import java.awt.AWTException;
+import java.awt.Dimension;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MouseHandler implements MouseListener {
-
-	public int leftMostX = -1920;
-	public int rightMostX = 1919;
+	Dimension size;
+	int resolutionSize;
+	public int leftMostX;
+	public int rightMostX;
 	Robot robot;
 	public Point pointerLocation;
 	public int currentLocationX;
@@ -47,6 +50,17 @@ public class MouseHandler implements MouseListener {
 	}
 	
 	public void getCurrentMouseCoordinates() throws AWTException { 
+		
+		//gets the resolution of the screen via AWT
+		size = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		//used to calibrate the screen for the first time when the initial program is being ran. 
+		//The screen size will be used then negated to get the rightMostX, and leftMostX
+		
+		rightMostX = ((int)size.getWidth()-1);
+		leftMostX = (-(int)size.getWidth());
+		
+		
 		robot = new Robot();
 		while (true) {
 		pointerLocation = MouseInfo.getPointerInfo().getLocation();
